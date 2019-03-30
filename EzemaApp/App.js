@@ -16,9 +16,26 @@ export default class App extends Component<Props> {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
       const data = await this.camera.takePictureAsync(options);
-      
-      // Send image data
-      console.log(data.uri);
+
+      const url = 'http://google.com';
+      console.log('Fetch : ', url);
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          image: data.base64
+        }),
+      }).then((response) => response.json())
+          .then((responseJson) => {
+            console.log(responseJson);
+            return responseJson.movies;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
     }
   };
 
