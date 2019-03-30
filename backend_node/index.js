@@ -51,10 +51,3 @@ loadImage("./samplepic.jpg").then(async function(image) {
     console.log(top5);
 });
 
-//let test = fs.readFileSync("./samplepic.jpg");
-
-//console.log(tf.browser.fromPixels(test));
-//tf.tensor2d()
-
-//console.log(tf.image.resizeNearestNeighbor.toString())
-//tf.image(test).resizeNearestNeighbor([224, 224]).toFloat();
