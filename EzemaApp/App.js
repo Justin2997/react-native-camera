@@ -12,6 +12,16 @@ import { RNCamera } from 'react-native-camera';
 
 type Props = {};
 export default class App extends Component<Props> {
+  takePicture = async function() {
+    if (this.camera) {
+      const options = { quality: 0.5, base64: true };
+      const data = await this.camera.takePictureAsync(options);
+      
+      // Send image data
+      console.log(data.uri);
+    }
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -36,15 +46,6 @@ export default class App extends Component<Props> {
         </View>
     );
   }
-
-  takePicture = async function() {
-    if (this.camera) {
-      const options = { quality: 0.5, base64: true };
-      const data = await this.camera.takePictureAsync(options);
-      console.log('Allo World !');
-      console.log(data.uri);
-    }
-  };
 }
 
 const styles = StyleSheet.create({
