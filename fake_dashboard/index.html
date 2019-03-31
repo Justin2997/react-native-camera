@@ -18,6 +18,21 @@
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+  <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBE6tBWFE30yJFY9uij-2XYUTdDA1pYM2U",
+    authDomain: "startupweekend2019-ba4b6.firebaseapp.com",
+    databaseURL: "https://startupweekend2019-ba4b6.firebaseio.com",
+    projectId: "startupweekend2019-ba4b6",
+    storageBucket: "startupweekend2019-ba4b6.appspot.com",
+    messagingSenderId: "371557044876"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database();
+</script>
+
 </head>
 
 <body id="page-top">
@@ -31,7 +46,7 @@
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon">
-          <img src="./img/logo.png" style="width: 73px; height: 63px;">
+          <img src="./img/logo.png" style="width: 63px; height: 63px;">
           
         </div>
         <div class="sidebar-brand-text mx-3">Dermate</div>
@@ -419,78 +434,58 @@
           <div class="row">
 
             <!-- Area Chart -->
-            <div class="col-xl-8 col-lg-7">
+            <div class="col-xl-4 col-lg-4">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Pollution dans l'air</h6>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                  </div>
+                  <h6 class="m-0 font-weight-bold text-primary">Pollution dans l'air (pm25)</h6>
                 </div>
                 <!-- Card Body -->
-                <div class="card-body">
+                <div class="card-body" style="padding: 0 !important;">
                   <div class="chart-area">
                     <canvas id="myAreaChart"></canvas>
                   </div>
                 </div>
               </div>
             </div>
-
-            <!-- Pie Chart -->
-            <div class="col-xl-4 col-lg-5">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Polluants</h6>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
+            <div class="col-xl-4 col-lg-4">
+                <div class="card shadow mb-4">
+                  <!-- Card Header - Dropdown -->
+                  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Temperature (C)</h6>
+                  </div>
+                  <!-- Card Body -->
+                  <div class="card-body" style="padding: 0 !important;">
+                    <div class="chart-area">
+                      <canvas id="myAreaChart2"></canvas>
                     </div>
                   </div>
                 </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                  <div class="chart-pie pt-4 pb-2">
-                    <canvas id="myPieChart"></canvas>
-                  </div>
-                  <div class="mt-4 text-center small">
-                    <span class="mr-2"> 
-                      <i class="fas fa-circle text-primary"></i> Dioxide de carbone
-                    </span>
-                    <span class="mr-2">
-                      <i class="fas fa-circle text-success"></i> Méthane
-                    </span>
-                    <span class="mr-2">
-                      <i class="fas fa-circle text-info"></i> Pollen
-                    </span>
+              </div>
+              <div class="col-xl-4 col-lg-4">
+                  <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                      <h6 class="m-0 font-weight-bold text-primary">Humidité (%)</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body" style="padding: 0 !important;">
+                      <div class="chart-area">
+                        <canvas id="myAreaChart3"></canvas>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+
+            <!-- Pie Chart -->
+
           </div>
 
           <!-- Content Row -->
           <div class="row">
 
             <!-- Content Column -->
-            <div class="col-lg-6 mb-4">
+            <div class="col-lg-6 mb-6">
 
               <!-- Illustrations -->
               <div class="card shadow mb-4">
@@ -506,25 +501,36 @@
                   </div>
                 </div>
 
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                      <h6 class="m-0 font-weight-bold text-primary">Notes du médecin</h6>
+                    </div>
+                    <div class="card-body">
+                      <p>La personne ne présente pas d'autres symptomes.</p>
+                    </div>
+            </div>
+
 
             </div>
 
             <div class="col-lg-6 mb-4">
-
-
-
               <!-- Approach -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Notes du médecin</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Photos récentes</h6>
                 </div>
-                <div class="card-body">
-                  <p>La personne ne présente pas d'autres symptomes.</p>
+                <div class="card-body" id="pictures">
                 </div>
               </div>
+              </div>
+
 
             </div>
+            
           </div>
+            
+          </div>
+
 
         </div>
         <!-- /.container-fluid -->
