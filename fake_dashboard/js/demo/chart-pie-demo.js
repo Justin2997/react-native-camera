@@ -25,7 +25,7 @@ ref.on('child_added', function(snapshot) {
     // elem.setAttribute("height", "768");
     // elem.setAttribute("width", "1024");
     // elem.setAttribute("alt", "Flower");
-    elem.setAttribute("style", "width: 80%; padding:10px;");
+    elem.setAttribute("style", "width:90%; padding:10px; display:block; margin-left:auto; margin-right:auto;");
     document.getElementById("pictures").prepend(elem2);
     document.getElementById("pictures").prepend(elem);
     
