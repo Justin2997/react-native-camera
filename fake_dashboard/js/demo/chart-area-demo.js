@@ -316,7 +316,6 @@ function addData(chart, label, data) {
     chart.data.datasets.forEach((dataset => {
       dataset.data.shift();
     }));
-    chart.data.shift();
   } 
   chart.data.labels.push(label);
   chart.data.datasets.forEach((dataset) => {
