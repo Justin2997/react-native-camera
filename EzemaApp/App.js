@@ -45,19 +45,21 @@ export default class App extends Component<Props> {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
       const data = await this.camera.takePictureAsync(options);
-
       const url = 'https://us-central1-startupweekend2019.cloudfunctions.net/forcast';
+      
+      var payload = {
+        images: data,
+        questionValue : this.state.value
+      }
 
-      return axios.get(url)
+      return axios.post(url, payload)
         .then(response => {
-          console.log('Reponse :', response.data);
           this.setState({
             forcast: response.data,
             pollution: response.data.pollution,
             showForcast: true,
             showQuestion: false
           });
-          console.log(this.state);
         })
         .catch(error => {
           console.log(error);
