@@ -1,64 +1,32 @@
 "use strict";
-const { loadImage, createCanvas, Image } = require("canvas");
-const tf = require("@tensorflow/tfjs");
-require("@tensorflow/tfjs-node"); // Use '@tensorflow/tfjs-node-gpu' if running with GPU.
+const firebase = require("firebase");
 
-const SKIN_CLASSES = {
-  0: "akiec, Actinic Keratoses (Solar Keratoses) or intraepithelial Carcinoma (Bowenâ€™s disease)",
-  1: "bcc, Basal Cell Carcinoma",
-  2: "bkl, Benign Keratosis",
-  3: "df, Dermatofibroma",
-  4: "mel, Melanoma",
-  5: "nv, Melanocytic Nevi",
-  6: "vasc, Vascular skin lesion"
+var config = {
+  apiKey: "AIzaSyBE6tBWFE30yJFY9uij-2XYUTdDA1pYM2U",
+  authDomain: "startupweekend2019-ba4b6.firebaseapp.com",
+  databaseURL: "https://startupweekend2019-ba4b6.firebaseio.com",
+  projectId: "startupweekend2019-ba4b6",
+  storageBucket: "startupweekend2019-ba4b6.appspot.com",
+  messagingSenderId: "371557044876"
 };
-
-let _model = null;
-async function getModel() {
-  if (!_model) {
-    _model = await tf.loadLayersModel(
-      "http://skin.test.woza.work/final_model_kaggle_version1/model.json"
-    );
-  }
-  return _model;
-}
+firebase.initializeApp(config);
+var database = firebase.database();
 
 exports.fct = async (req, res) => {
   const base64 = req.body.image;
-  if (!base64) {
-    return []
+  if (!base64 || !base64.base64) {
+    res.status(400);
+    res.end("");
+    return;
   }
-  const model = await getModel();
-  loadImage('data:image/jpg;base64,' + base64).then(async image => {
-    const canvas = createCanvas(image.width, image.height);
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(image, 0, 0);
+  let key = database.ref("pictures").push().key;
+  let dict = {};
+  dict[key] = "data:image/jpeg;base64," + base64.base64;
+  database.ref("pictures").update(dict);
+  let dict2 = {};
+  dict2[key] = req.body.questionValue;
+  database.ref("metaData").update(dict2);
 
-    let tensor = tf.browser
-    .fromPixels(canvas)
-    .resizeNearestNeighbor([224, 224])
-    .toFloat();
-
-    let offset = tf.scalar(127.5);
-    tensor = tensor
-      .sub(offset)
-      .div(offset)
-      .expandDims();
-
-    let predictions = await model.predict(tensor).data();
-
-    let sorted = Array.from(predictions)
-      .map(function(p, i) {
-        return {
-          probability: p,
-          className: SKIN_CLASSES[i]
-        };
-      })
-      .sort(function(a, b) {
-        return b.probability - a.probability;
-      });
-
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(sorted));
-  });
+  res.end("");
+  res.status(200);
 };
